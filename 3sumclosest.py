@@ -1,6 +1,16 @@
-import bisect
+# import bisect
 
 class Solution(object):
+
+    def unwind_and_collect(self, stack, unwind_count=3):
+        cursor = []
+        if len(stack) > 2:
+            cursor.append(stack.pop(0))
+            cursor.append(stack[0])
+            cursor.append(stack[1])
+        print(sum(cursor))
+        return sum(cursor)
+
     def threeSumClosest(self, nums, target):
         """
         :type nums: List[int]
@@ -8,20 +18,30 @@ class Solution(object):
         :rtype: int
         """
         T = log(target**3, 10) # modulo operation, O(1)
-        closestvalue = 0
-        stack = []
+
+        print(T)
+
+        closestvalue = -10000000000000000000000000
+        
          #min operation, O(n), can be simplified to O(logn), To DO: Modulo 3 for each number
 
         # nums.sort()
         # sortednums = closest(nums, T/3)
 
-        closest = min(nums, key= lambda x:abs(x-T/3)) # O(n)
-        stack.append(closest)
+        N=T/3+0.0
+
+        #print(N)
+
+        closest = sorted(nums, key=lambda x: abs(x - N))
+
+        #print(closest)
+        stack = closest
         
-        result = unwind_and_collect(stack)
+        result = self.unwind_and_collect(stack)
 
+        # print(result)
 
-        if abs(result - target) == 0:
+        if result - target == 0:
             return closestvalue
         if abs(result - target) < abs(closestvalue - target):
             closestvalue = result
@@ -29,14 +49,8 @@ class Solution(object):
         return closestvalue
 
 
-    def unwind_and_collect(stack, unwind_count=3):
-        cursor.append(stack.pop())
 
-        for _ in range(min(unwind_count-1, len(stack))):
-            cursor.append(stack[-1])
-        
-        return sum(cursor)
-
+"""
     def closest(sorted_nums, target):
         i = bisect.bisect_left(sorted_nums, target)
         if i == 0: 
@@ -50,4 +64,6 @@ class Solution(object):
 
         #worm throwugh to find closest to target
         # *** OPTIMIZATION: zeros in the array are FREE O(n) time OR LESS??
+
+        """
 
