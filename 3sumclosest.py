@@ -42,8 +42,10 @@ class Solution(object):
         # print(result)
 
         if result - target == 0:
-            return closestvalue
+            print("returned target")
+            return result
         if abs(result - target) < abs(closestvalue - target):
+            print("closest value achieved")
             closestvalue = result
 
         return closestvalue
@@ -66,4 +68,3 @@ class Solution(object):
         # *** OPTIMIZATION: zeros in the array are FREE O(n) time OR LESS??
 
         """
-
