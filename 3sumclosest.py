@@ -1,8 +1,9 @@
 # import bisect
+import math
 
 class Solution(object):
 
-    def unwind_and_collect(self, stack, unwind_count=3):
+    def unwind_and_collect(self, stack, neg, zero, unwind_count=3):
         cursor = []
         if len(stack) > 2:
             cursor.append(stack.pop(0))
@@ -17,8 +18,15 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        T = log(target**3, 10) # modulo operation, O(1)
-
+        #negative = False
+        #if target < 0:
+            #negative = True
+        l = abs(target**3)
+        
+        if l != 0:
+            T = math.log(l) # modulo operation, O(1)
+        else:
+            T = l
         print(T)
 
         closestvalue = -10000000000000000000000000
@@ -36,17 +44,28 @@ class Solution(object):
 
         #print(closest)
         stack = closest
+
+        print(stack)
         
-        result = self.unwind_and_collect(stack)
+        # I need a simple for loop now
+        while(True):
+            if len(stack) > 2:
+                result = self.unwind_and_collect(stack)
 
-        # print(result)
+                # print(result)
 
-        if result - target == 0:
-            print("returned target")
-            return result
-        if abs(result - target) < abs(closestvalue - target):
-            print("closest value achieved")
-            closestvalue = result
+                if result - target == 0:
+                    print("returned target")
+                    return result
+                #if negative == True:
+                    #if abs(target - result) < abs(target - closestvalue):
+                        #closestvalue = result
+                    
+                if abs(result - target) < abs(closestvalue - target):
+                    print("closest value achieved")
+                    closestvalue = result
+            else:
+                break
 
         return closestvalue
 
